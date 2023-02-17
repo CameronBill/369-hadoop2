@@ -24,7 +24,7 @@ public class RequestsPerCountry {
 
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            String[] sa = value.toString().split(" ");
+            String[] sa = value.toString().split("\t");
             String hostname = sa[0];
             String numRequests = sa[1];
             context.write(new Text(hostname), new Text(numRequests));
@@ -49,16 +49,16 @@ public class RequestsPerCountry {
             int numRequests = 0;
             String country = null;
             Iterator<Text> itr = values.iterator();
-            String temp = itr.next().toString();
+            String temp = itr.next().toString().strip;
             for (int i = 0; i < temp.length(); i++) {
                 if (!Character.isDigit(temp.charAt(i))) {
-                    numRequests = Integer.parseInt(itr.next().toString());
+                    numRequests = Integer.parseInt(itr.next().toString().strip());
                     country = temp;
                 }
             }
             if (country == null) {
                 numRequests = Integer.parseInt(temp);
-                country = itr.next().toString();
+                country = itr.next().toString().strip();
             }
 
             context.write(new Text(country), new IntWritable(numRequests));
