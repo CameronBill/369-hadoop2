@@ -2,6 +2,7 @@ package csc369;
 
 import java.io.IOException;
 import java.io.File;
+import java.nio.file.Files;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.IntWritable;
