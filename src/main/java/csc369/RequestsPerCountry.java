@@ -16,6 +16,8 @@ public class RequestsPerCountry {
     public static final Class OUTPUT_KEY_CLASS = Text.class;
     public static final Class OUTPUT_VALUE_CLASS = Text.class;
 
+    public static final Class GROUPING_OUTPUT_VALUE_CLASS = IntWritable.class;
+
     public static final Class SORT_OUTPUT_KEY_CLASS = IntWritable.class;
 
     public static class RequestMapper extends Mapper<LongWritable, Text, Text, Text> {
@@ -40,7 +42,7 @@ public class RequestsPerCountry {
         }
     }
 
-    public static class CombinerImpl extends Reducer<Text, Text, Text, IntWritable> {
+    public static class CountryReducer extends Reducer<Text, Text, Text, IntWritable> {
 
         @Override
         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
@@ -60,7 +62,18 @@ public class RequestsPerCountry {
         }
     }
 
-    public static class ReducerImpl extends Reducer<Text, IntWritable, Text, IntWritable> {
+    public static class RequestCollector extends Mapper<LongWritable, Text, Text, IntWritable> {
+
+        @Override
+        public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            String sa[] = value.toString().split(",");
+            String country = sa[0];
+            int numRequests = Integer.parseInt(sa[1]);
+            context.write(new Text(country), new IntWritable(numRequests));
+        }
+    }
+
+    public static class RequestSummer extends Reducer<Text, IntWritable, Text, IntWritable> {
         private IntWritable result = new IntWritable();
 
         @Override

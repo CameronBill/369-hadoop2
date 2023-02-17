@@ -27,6 +27,7 @@ public class HadoopApp {
 		Job job = new Job(conf, "Hadoop example");
 		Job job1 = new Job(conf, "Extra");
 		Job job2 = new Job(conf, "Another");
+		Job job3 = new Job(conf, "getting complex");
 
 		String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
 
@@ -92,8 +93,7 @@ public class HadoopApp {
 			MultipleInputs.addInputPath(job2, new Path(otherArgs[2]),
 					TextInputFormat.class, RequestsPerCountry.CountryMapper.class);
 
-			job2.setCombinerClass(RequestsPerCountry.CombinerImpl.class);
-			job2.setReducerClass(RequestsPerCountry.ReducerImpl.class);
+			job2.setReducerClass(RequestsPerCountry.CountryReducer.class);
 
 			job2.setOutputKeyClass(RequestsPerCountry.OUTPUT_KEY_CLASS);
 			job2.setOutputValueClass(RequestsPerCountry.OUTPUT_VALUE_CLASS);
@@ -102,12 +102,21 @@ public class HadoopApp {
 
 			job2.waitForCompletion(true);
 
+			job3.setReducerClass(RequestsPerCountry.RequestSummer.class);
+			job3.setMapperClass(RequestsPerCountry.RequestCollector.class);
+			job3.setOutputKeyClass(RequestsPerCountry.OUTPUT_KEY_CLASS);
+			job3.setOutputValueClass(RequestsPerCountry.GROUPING_OUTPUT_VALUE_CLASS);
+			FileInputFormat.addInputPath(job3, new Path("temp_out1/part-r-00000"));
+			FileOutputFormat.setOutputPath(job3, new Path("temp_out2"));
+
+			job3.waitForCompletion(true);
+
 			job.setMapperClass(RequestsPerCountry.SortMapper.class);
 			job.setReducerClass(RequestsPerCountry.SortReducer.class);
 			job.setOutputKeyClass(RequestsPerCountry.SORT_OUTPUT_KEY_CLASS);
 			job.setOutputValueClass(RequestsPerCountry.OUTPUT_VALUE_CLASS);
 
-			FileInputFormat.addInputPath(job, new Path("temp_out1"));
+			FileInputFormat.addInputPath(job, new Path("temp_out2/part-r-00000"));
 			FileOutputFormat.setOutputPath(job, new Path(otherArgs[3]));
 		} else {
 			System.out.println("Unrecognized job: " + otherArgs[0]);
