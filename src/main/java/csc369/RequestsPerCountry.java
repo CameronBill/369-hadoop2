@@ -82,7 +82,7 @@ public class RequestsPerCountry {
         @Override
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
             String sa[] = value.toString().split(",");
-            String country = sa[0];
+            Text country = new Text(sa[0]);
             IntWritable numRequests = new IntWritable(Integer.parseInt(sa[1]));
             context.write(numRequests, country);
         }
