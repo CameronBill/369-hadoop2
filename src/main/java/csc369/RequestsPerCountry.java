@@ -46,7 +46,7 @@ public class RequestsPerCountry {
 
         @Override
         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-            int numRequests = null;
+            int numRequests = 0;
             String country = null;
             Iterator<Text> itr = values.iterator();
             String temp = itr.next().toString();
