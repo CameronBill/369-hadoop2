@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
 
+import org.apache.hadoop.io.WritableComparable;
+import org.apache.hadoop.io.WritableComparator;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
