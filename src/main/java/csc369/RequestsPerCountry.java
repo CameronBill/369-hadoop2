@@ -48,7 +48,7 @@ public class RequestsPerCountry {
             String country;
             Iterator<Text> itr = values.iterator();
             String temp = itr.next().toString();
-            if (temp.isDigit()) {
+            if (temp.isdigit()) {
                 numRequests = Integer.parseInt(temp);
                 country = itr.next().toString();
             } else {
@@ -96,7 +96,7 @@ public class RequestsPerCountry {
             Iterator<Text> itr = values.iterator();
 
             while (itr.hasNext()) {
-                context.write(itr.next().get(), key);
+                context.write(itr.next().toString(), key);
             }
         }
     }
