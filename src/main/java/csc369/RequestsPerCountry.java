@@ -99,7 +99,7 @@ public class RequestsPerCountry {
     public static class SortMapper extends Mapper<Text, Text, IntWritable, Text> {
 
         @Override
-        public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
+        public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             String sa[] = value.toString().split(",");
             Text country = new Text(sa[0]);
             IntWritable numRequests = new IntWritable(Integer.parseInt(sa[1]));
