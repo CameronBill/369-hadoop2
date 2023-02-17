@@ -90,19 +90,19 @@ public class HadoopApp {
 
 			job1.waitForCompletion(true);
 
-			MultipleInputs.addInputPath(job2, new Path("temp_out/part-r-00000"),
+			MultipleInputs.addInputPath(job, new Path("temp_out/part-r-00000"),
 					TextInputFormat.class, RequestsPerCountry.RequestMapper.class);
-			MultipleInputs.addInputPath(job2, new Path(otherArgs[2]),
+			MultipleInputs.addInputPath(job, new Path(otherArgs[2]),
 					TextInputFormat.class, RequestsPerCountry.CountryMapper.class);
 
-			job2.setReducerClass(RequestsPerCountry.CountryReducer.class);
+			job.setReducerClass(RequestsPerCountry.CountryReducer.class);
 
-			job2.setOutputKeyClass(RequestsPerCountry.OUTPUT_KEY_CLASS);
-			job2.setOutputValueClass(RequestsPerCountry.OUTPUT_VALUE_CLASS);
+			job.setOutputKeyClass(RequestsPerCountry.OUTPUT_KEY_CLASS);
+			job.setOutputValueClass(RequestsPerCountry.OUTPUT_VALUE_CLASS);
 
-			FileOutputFormat.setOutputPath(job2, new Path("temp_out1"));
+			FileOutputFormat.setOutputPath(job, new Path("temp_out1"));
 
-			job2.waitForCompletion(true);
+			// job2.waitForCompletion(true);
 
 			// job3.setReducerClass(RequestsPerCountry.RequestSummer.class);
 			// job3.setMapperClass(RequestsPerCountry.RequestCollector.class);
