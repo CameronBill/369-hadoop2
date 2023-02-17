@@ -96,7 +96,7 @@ public class RequestsPerCountry {
         }
     }
 
-    public static class SortMapper extends Mapper<Text, Text, IntWritable, Text> {
+    public static class SortMapper extends Mapper<LongWritable, Text, IntWritable, Text> {
 
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
