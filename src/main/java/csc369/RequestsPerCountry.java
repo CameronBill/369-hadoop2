@@ -47,12 +47,12 @@ public class RequestsPerCountry {
             int numRequests;
             String country;
             Iterator<Text> itr = values.iterator();
-            String temp = itr.next().get();
-            if (temp.isdigit()) {
+            String temp = itr.next();
+            if (temp.isDigit()) {
                 numRequests = Integer.parseInt(temp);
-                country = itr.next().get();
+                country = itr.next();
             } else {
-                numRequests = Integer.parseInt(itr.next().get());
+                numRequests = Integer.parseInt(itr.next());
                 country = temp;
             }
 

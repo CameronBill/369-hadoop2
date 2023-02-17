@@ -68,7 +68,7 @@ public class HadoopApp {
 				temp.delete();
 			}
 			temp = new File("temp_out1");
-			if (Files.exists()) {
+			if (temp.exists()) {
 				for (String entry : temp.list()) {
 					File tempEntry = new File(temp.getPath(), entry);
 					tempEntry.delete();
