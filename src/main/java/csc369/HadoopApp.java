@@ -82,6 +82,8 @@ public class HadoopApp {
 			FileInputFormat.addInputPath(job, new Path(otherArgs[1]));
 			FileOutputFormat.setOutputPath(job, new Path("temp_out"));
 
+			job.waitForCompletion(true);
+
 			MultipleInputs.addInputPath(job, new Path("temp_out"),
 					TextInputFormat.class, RequestsPerCountry.RequestMapper.class);
 			MultipleInputs.addInputPath(job, new Path(otherArgs[2]),
