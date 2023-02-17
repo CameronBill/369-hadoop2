@@ -19,6 +19,16 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 
 public class HadoopApp {
+	public static void clearDir(String dirName) {
+		File temp = new File(dirName);
+		if (temp.exists()) {
+			for (String entry : temp.list()) {
+				File tempEntry = new File(temp.getPath(), entry);
+				tempEntry.delete();
+			}
+			temp.delete();
+		}
+	}
 
 	public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 		Configuration conf = new Configuration();
@@ -63,22 +73,9 @@ public class HadoopApp {
 			FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));
 		} else if ("RequestsPerCountry".equalsIgnoreCase(otherArgs[0])) {
 
-			File temp = new File("temp_out");
-			if (temp.exists()) {
-				for (String entry : temp.list()) {
-					File tempEntry = new File(temp.getPath(), entry);
-					tempEntry.delete();
-				}
-				temp.delete();
-			}
-			temp = new File("temp_out1");
-			if (temp.exists()) {
-				for (String entry : temp.list()) {
-					File tempEntry = new File(temp.getPath(), entry);
-					tempEntry.delete();
-				}
-				temp.delete();
-			}
+			clearDir("temp_out");
+			clearDir("temp_out1");
+			clearDir("temp_out2");
 
 			job1.setReducerClass(AccessLog.ReducerImpl.class);
 			job1.setMapperClass(AccessLog.MapperImpl.class);
