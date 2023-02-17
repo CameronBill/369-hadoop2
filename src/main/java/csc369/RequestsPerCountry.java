@@ -47,15 +47,18 @@ public class RequestsPerCountry {
         @Override
         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             int numRequests;
-            String country;
+            String country = null;
             Iterator<Text> itr = values.iterator();
             String temp = itr.next().toString();
-            try {
+            for (int i = 0; i < temp.length(); i++) {
+                if (!Character.isDigit(temp.charAt[i])) {
+                    numRequests = Integer.parseInt(itr.next().toString());
+                    country = temp;
+                }
+            }
+            if (country == null) {
                 numRequests = Integer.parseInt(temp);
                 country = itr.next().toString();
-            } catch (NumberFormatException e) {
-                numRequests = Integer.parseInt(itr.next().toString());
-                country = temp;
             }
 
             context.write(new Text(country), new IntWritable(numRequests));
