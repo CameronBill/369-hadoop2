@@ -1,5 +1,7 @@
 package csc369;
 
+import java.io.PrintStream;
+
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.StringTokenizer;
@@ -60,6 +62,8 @@ public class RequestsPerCountry {
                 numRequests = Integer.parseInt(temp);
                 country = itr.next().toString().strip();
             }
+
+            System.out.printf("Country: %s, NumRequests: %d", country, numRequests)
 
             context.write(new Text(country), new IntWritable(numRequests));
         }
