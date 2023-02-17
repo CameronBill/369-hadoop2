@@ -62,22 +62,24 @@ public class HadoopApp {
 			FileInputFormat.addInputPath(job, new Path(otherArgs[1]));
 			FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));
 		} else if ("RequestsPerCountry".equalsIgnoreCase(otherArgs[0])) {
-			File temp = new File("temp_out");
-			if (temp.exists()) {
-				for (String entry : temp.list()) {
-					File tempEntry = new File(temp.getPath(), entry);
-					tempEntry.delete();
-				}
-				temp.delete();
-			}
-			temp = new File("temp_out1");
-			if (temp.exists()) {
-				for (String entry : temp.list()) {
-					File tempEntry = new File(temp.getPath(), entry);
-					tempEntry.delete();
-				}
-				temp.delete();
-			}
+			/*
+			 * File temp = new File("temp_out");
+			 * if (temp.exists()) {
+			 * for (String entry : temp.list()) {
+			 * File tempEntry = new File(temp.getPath(), entry);
+			 * tempEntry.delete();
+			 * }
+			 * temp.delete();
+			 * }
+			 * temp = new File("temp_out1");
+			 * if (temp.exists()) {
+			 * for (String entry : temp.list()) {
+			 * File tempEntry = new File(temp.getPath(), entry);
+			 * tempEntry.delete();
+			 * }
+			 * temp.delete();
+			 * }
+			 */
 
 			job1.setReducerClass(AccessLog.ReducerImpl.class);
 			job1.setMapperClass(AccessLog.MapperImpl.class);
