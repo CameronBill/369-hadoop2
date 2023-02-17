@@ -56,6 +56,7 @@ public class RequestsPerCountry {
                 if (!Character.isDigit(temp.charAt(i))) {
                     numRequests = Integer.parseInt(itr.next().toString().strip());
                     country = temp;
+                    break;
                 }
             }
             if (country == null) {
