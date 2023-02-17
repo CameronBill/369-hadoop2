@@ -25,6 +25,9 @@ public class HadoopApp {
 		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", ",");
 
 		Job job = new Job(conf, "Hadoop example");
+		Job job1 = new Job(conf, "Extra");
+		Job job2 = new Job(conf, "Another");
+
 		String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
 
 		if (otherArgs.length < 3) {
@@ -75,29 +78,28 @@ public class HadoopApp {
 				temp.delete();
 			}
 
-			job.setReducerClass(AccessLog.ReducerImpl.class);
-			job.setMapperClass(AccessLog.MapperImpl.class);
-			job.setOutputKeyClass(AccessLog.OUTPUT_KEY_CLASS);
-			job.setOutputValueClass(AccessLog.OUTPUT_VALUE_CLASS);
-			FileInputFormat.addInputPath(job, new Path(otherArgs[1]));
-			FileOutputFormat.setOutputPath(job, new Path("temp_out"));
+			job1.setReducerClass(AccessLog.ReducerImpl.class);
+			job1.setMapperClass(AccessLog.MapperImpl.class);
+			job1.setOutputKeyClass(AccessLog.OUTPUT_KEY_CLASS);
+			FileInputFormat.addInputPath(job1, new Path(otherArgs[1]));
+			FileOutputFormat.setOutputPath(job1, new Path("temp_out"));
 
-			job.waitForCompletion(true);
+			job1.waitForCompletion(true);
 
-			MultipleInputs.addInputPath(job, new Path("temp_out"),
+			MultipleInputs.addInputPath(job2, new Path("temp_out"),
 					TextInputFormat.class, RequestsPerCountry.RequestMapper.class);
-			MultipleInputs.addInputPath(job, new Path(otherArgs[2]),
+			MultipleInputs.addInputPath(job2, new Path(otherArgs[2]),
 					TextInputFormat.class, RequestsPerCountry.CountryMapper.class);
 
-			job.setCombinerClass(RequestsPerCountry.CombinerImpl.class);
-			job.setReducerClass(RequestsPerCountry.ReducerImpl.class);
+			job2.setCombinerClass(RequestsPerCountry.CombinerImpl.class);
+			job2.setReducerClass(RequestsPerCountry.ReducerImpl.class);
 
-			job.setOutputKeyClass(RequestsPerCountry.OUTPUT_KEY_CLASS);
-			job.setOutputValueClass(RequestsPerCountry.OUTPUT_VALUE_CLASS);
+			job2.setOutputKeyClass(RequestsPerCountry.OUTPUT_KEY_CLASS);
+			job2.setOutputValueClass(RequestsPerCountry.OUTPUT_VALUE_CLASS);
 
 			FileOutputFormat.setOutputPath(job, new Path("temp_out1"));
 
-			job.waitForCompletion(true);
+			job2.waitForCompletion(true);
 
 			job.setMapperClass(RequestsPerCountry.SortMapper.class);
 			job.setReducerClass(RequestsPerCountry.SortReducer.class);
