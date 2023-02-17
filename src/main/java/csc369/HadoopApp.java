@@ -98,7 +98,7 @@ public class HadoopApp {
 			job2.setOutputKeyClass(RequestsPerCountry.OUTPUT_KEY_CLASS);
 			job2.setOutputValueClass(RequestsPerCountry.OUTPUT_VALUE_CLASS);
 
-			FileOutputFormat.setOutputPath(job, new Path("temp_out1"));
+			FileOutputFormat.setOutputPath(job2, new Path("temp_out1"));
 
 			job2.waitForCompletion(true);
 
@@ -117,6 +117,8 @@ public class HadoopApp {
 	}
 
 }
+
+
 	
 	
 	
