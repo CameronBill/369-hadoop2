@@ -51,7 +51,7 @@ public class RequestsPerCountry {
             Iterator<Text> itr = values.iterator();
             String temp = itr.next().toString();
             for (int i = 0; i < temp.length(); i++) {
-                if (!Character.isDigit(temp.charAt[i])) {
+                if (!Character.isDigit(temp.charAt(i))) {
                     numRequests = Integer.parseInt(itr.next().toString());
                     country = temp;
                 }
