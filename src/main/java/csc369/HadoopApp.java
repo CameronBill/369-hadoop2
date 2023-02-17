@@ -87,7 +87,7 @@ public class HadoopApp {
 
 			job1.waitForCompletion(true);
 
-			MultipleInputs.addInputPath(job2, new Path("temp_out"),
+			MultipleInputs.addInputPath(job2, new Path("temp_out/part-r-00000"),
 					TextInputFormat.class, RequestsPerCountry.RequestMapper.class);
 			MultipleInputs.addInputPath(job2, new Path(otherArgs[2]),
 					TextInputFormat.class, RequestsPerCountry.CountryMapper.class);
@@ -117,8 +117,3 @@ public class HadoopApp {
 	}
 
 }
-
-
-	
-	
-	
