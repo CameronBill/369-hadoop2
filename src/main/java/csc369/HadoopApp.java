@@ -111,6 +111,9 @@ public class HadoopApp {
 
 			job.setMapperClass(RequestsPerCountry.SortMapper.class);
 			job.setReducerClass(RequestsPerCountry.SortReducer.class);
+
+			job.setSortComparatorClass(RequestsPerCountry.SortComparator.class);
+
 			job.setOutputKeyClass(RequestsPerCountry.SORT_OUTPUT_KEY_CLASS);
 			job.setOutputValueClass(RequestsPerCountry.OUTPUT_VALUE_CLASS);
 

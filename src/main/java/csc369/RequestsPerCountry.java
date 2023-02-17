@@ -107,6 +107,20 @@ public class RequestsPerCountry {
         }
     }
 
+    public static class SortComparator extends WritableComparator {
+        protected SortComparator() {
+            super(IntWritable.class, true);
+        }
+
+        @Override
+        public int compare(WritableComparable wc1,
+                WritableComparable wc2) {
+            IntWritable int1 = (IntWritable) wc1;
+            IntWritable int2 = (IntWritable) wc2;
+            return -(int1.compareTo(int2));
+        }
+    }
+
     public static class SortReducer extends Reducer<IntWritable, Text, Text, IntWritable> {
 
         @Override
