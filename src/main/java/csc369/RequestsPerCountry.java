@@ -48,8 +48,10 @@ public class RequestsPerCountry {
         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             int numRequests = 0;
             String country = null;
-            Iterator<Text> itr = values.iterator();
+            Iterator<org.w3c.dom.Text> itr = values.iterator();
             String temp = itr.next().toString().strip();
+            while (itr.hasNext() == false) {
+            }
             for (int i = 0; i < temp.length(); i++) {
                 if (!Character.isDigit(temp.charAt(i))) {
                     numRequests = Integer.parseInt(itr.next().toString().strip());
