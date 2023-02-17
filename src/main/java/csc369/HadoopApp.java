@@ -81,6 +81,7 @@ public class HadoopApp {
 			job1.setReducerClass(AccessLog.ReducerImpl.class);
 			job1.setMapperClass(AccessLog.MapperImpl.class);
 			job1.setOutputKeyClass(AccessLog.OUTPUT_KEY_CLASS);
+			job1.setOutputValueClass(AccessLog.OUTPUT_VALUE_CLASS);
 			FileInputFormat.addInputPath(job1, new Path(otherArgs[1]));
 			FileOutputFormat.setOutputPath(job1, new Path("temp_out"));
 
@@ -116,3 +117,6 @@ public class HadoopApp {
 	}
 
 }
+	
+	
+	
