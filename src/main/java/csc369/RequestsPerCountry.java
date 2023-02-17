@@ -14,7 +14,9 @@ import org.apache.hadoop.mapreduce.Reducer;
 public class RequestsPerCountry {
 
     public static final Class OUTPUT_KEY_CLASS = Text.class;
-    public static final Class OUTPUT_VALUE_CLASS = IntWritable.class;
+    public static final Class OUTPUT_VALUE_CLASS = Text.class;
+
+    public static final Class SORT_OUTPUT_KEY_CLASS = IntWritable.class;
 
     public static class RequestMapper extends Mapper<LongWritable, Text, Text, Text> {
 
@@ -38,18 +40,20 @@ public class RequestsPerCountry {
         }
     }
 
-    public static class CombinerImpl extends Reducer<Text, Text, Text, intWritable> {
+    public static class CombinerImpl extends Reducer<Text, Text, Text, IntWritable> {
 
         @Override
         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             int numRequests;
             String country;
-            if (values[0].isdigit()) {
-                numRequests = Integer.parseInt(values[0]);
-                country = values[1];
+            Iterator<Text> itr = values.iterator();
+            String temp = itr.next().get();
+            if (temp.isdigit()) {
+                numRequests = Integer.parseInt(temp);
+                country = itr.next().get();
             } else {
-                numRequests = Integer.parseInt(values[1]);
-                country = values[0];
+                numRequests = Integer.parseInt(itr.next().get());
+                country = temp;
             }
 
             context.write(new Text(country), new IntWritable(numRequests));
@@ -73,7 +77,7 @@ public class RequestsPerCountry {
         }
     }
 
-    public static class SortMapper extends Mapper<Text, Text, Text, Text> {
+    public static class SortMapper extends Mapper<Text, Text, IntWritable, Text> {
 
         @Override
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {

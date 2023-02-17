@@ -68,7 +68,7 @@ public class HadoopApp {
 				temp.delete();
 			}
 			temp = new File("temp_out1");
-			if (Files.exists("temp_out1")) {
+			if (Files.exists()) {
 				for (String entry : temp.list()) {
 					File tempEntry = new File(temp.getPath(), entry);
 					tempEntry.delete();
@@ -98,8 +98,8 @@ public class HadoopApp {
 
 			job.waitForCompletion(true);
 
-			job.setMapperClass(RequestsPerCountry.SortMapper);
-			job.setReducerClass(RequestsPerCountry.SortReducer);
+			job.setMapperClass(RequestsPerCountry.SortMapper.class);
+			job.setReducerClass(RequestsPerCountry.SortReducer.class);
 			job.setOutputKeyClass(RequestsPerCountry.SORT_OUTPUT_KEY_CLASS);
 			job.setOutputValueClass(RequestsPerCountry.OUTPUT_VALUE_CLASS);
 
