@@ -59,17 +59,16 @@ public class HadoopApp {
 			FileInputFormat.addInputPath(job, new Path(otherArgs[1]));
 			FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));
 		} else if ("RequestsPerCountry".equalsIgnoreCase(otherArgs[0])) {
-			File temp;
-			if (Files.exists("temp_out")) {
-				temp = new File("temp_out");
+			File temp = new File("temp_out");
+			if (temp.exists()) {
 				for (String entry : temp.list()) {
 					File tempEntry = new File(temp.getPath(), entry);
 					tempEntry.delete();
 				}
 				temp.delete();
 			}
+			temp = new File("temp_out1");
 			if (Files.exists("temp_out1")) {
-				temp = new File("temp_out1");
 				for (String entry : temp.list()) {
 					File tempEntry = new File(temp.getPath(), entry);
 					tempEntry.delete();
