@@ -100,7 +100,7 @@ public class RequestsPerCountry {
 
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            String sa[] = value.toString().split(",");
+            String sa[] = value.toString().split("\t");
             Text country = new Text(sa[0]);
             IntWritable numRequests = new IntWritable(Integer.parseInt(sa[1]));
             context.write(numRequests, country);
