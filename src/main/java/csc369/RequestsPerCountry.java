@@ -63,7 +63,7 @@ public class RequestsPerCountry {
                 country = itr.next().toString().strip();
             }
 
-            System.out.printf("Country: %s, NumRequests: %d", country, numRequests)
+            System.out.printf("Country: %s, NumRequests: %d", country, numRequests);
 
             context.write(new Text(country), new IntWritable(numRequests));
         }
